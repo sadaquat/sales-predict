@@ -1,13 +1,11 @@
 import os
 import pandas as pd
 import psycopg2
-from dotenv import load_dotenv
-
-load_dotenv()
+from config import get_secret
 
 def get_monthly_revenue():
     """Extract monthly revenue from Northwind using SemanticSQL's revenue definition."""
-    conn = psycopg2.connect(os.getenv("DATABASE_URL"))
+    conn = psycopg2.connect(get_secret("DATABASE_URL"))
 
     # Same revenue definition as SemanticSQL semantic layer
     # net of discounts, shipped orders only
@@ -49,7 +47,7 @@ def get_monthly_revenue():
 
 def get_revenue_by_category():
     """Revenue breakdown by product category per month."""
-    conn = psycopg2.connect(os.getenv("DATABASE_URL"))
+    conn = psycopg2.connect(get_secret("DATABASE_URL"))
 
     query = """
         SELECT
@@ -79,7 +77,7 @@ def get_revenue_by_category():
 
 def get_revenue_by_country():
     """Revenue by customer country per month."""
-    conn = psycopg2.connect(os.getenv("DATABASE_URL"))
+    conn = psycopg2.connect(get_secret("DATABASE_URL"))
 
     query = """
         SELECT
