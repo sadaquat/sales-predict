@@ -5,7 +5,7 @@ from config import get_secret
 
 def get_monthly_revenue():
     """Extract monthly revenue from Northwind using SemanticSQL's revenue definition."""
-    db_url = get_secret("DATABASE_URL")
+    db_url = get_secret("NEON_DATABASE_URL") or get_secret("DATABASE_URL")
     if not db_url:
         raise ValueError("DATABASE_URL secret not found. Check Streamlit Cloud secrets.")
     conn = psycopg2.connect(db_url)
@@ -50,7 +50,7 @@ def get_monthly_revenue():
 
 def get_revenue_by_category():
     """Revenue breakdown by product category per month."""
-    db_url = get_secret("DATABASE_URL")
+    db_url = get_secret("NEON_DATABASE_URL") or get_secret("DATABASE_URL")
     if not db_url:
         raise ValueError("DATABASE_URL secret not found. Check Streamlit Cloud secrets.")
     conn = psycopg2.connect(db_url)
@@ -83,7 +83,7 @@ def get_revenue_by_category():
 
 def get_revenue_by_country():
     """Revenue by customer country per month."""
-    db_url = get_secret("DATABASE_URL")
+    db_url = gget_secret("NEON_DATABASE_URL") or get_secret("DATABASE_URL")
     if not db_url:
         raise ValueError("DATABASE_URL secret not found. Check Streamlit Cloud secrets.")
     conn = psycopg2.connect(db_url)
