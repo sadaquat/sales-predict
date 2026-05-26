@@ -4,14 +4,16 @@ from dotenv import load_dotenv
 load_dotenv()
 
 def get_secret(key, default=None):
-    """
-    Get a secret from Streamlit secrets if running on Streamlit Cloud,
-    otherwise fall back to environment variables (.env file locally).
-    """
+    """Get secret from Streamlit secrets (cloud) or .env file (local)."""
+    # Try Streamlit secrets first
     try:
         import streamlit as st
-        if hasattr(st, "secrets") and key in st.secrets:
-            return st.secrets[key]
+        val = st.secrets.get(key)
+        if val is not None:
+            return val
     except Exception:
         pass
-    return os.getenv(key, default)
+    
+    # Fall back to environment variable
+    val = os.getenv(key, default)
+    return val
